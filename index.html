@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cappello Parlante Tech — Talent Garden</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- STANDBY -->
+  <section id="screen-standby" class="screen active">
+    <div class="screen-content standby-content">
+      <div class="logo-area" id="logo-area">
+        <div class="hat-emoji">🎩</div>
+        <h1 class="logo-title">Cappello Parlante Tech</h1>
+        <p class="logo-subtitle">Talent Garden</p>
+      </div>
+      <button id="btn-start" class="btn-primary btn-huge">▶ Inizia il tuo Smistamento</button>
+      <div class="labs-collapsible" id="labs-collapsible">
+        <button class="btn-labs-toggle" id="btn-labs-toggle">
+          <span id="labs-toggle-label">Mostra posti disponibili</span>
+          <span class="toggle-arrow" id="labs-toggle-arrow">▼</span>
+        </button>
+        <div class="labs-grid-wrapper" id="labs-grid-wrapper">
+          <div class="labs-grid" id="labs-grid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTION -->
+  <section id="screen-question" class="screen">
+    <div class="screen-content question-content">
+      <div class="step-indicator" id="step-indicator">Domanda 1 di 3</div>
+      <h2 class="question-text" id="question-text"></h2>
+      <div class="slider-area">
+        <div class="slider-labels">
+          <span class="label-left" id="label-left"></span>
+          <span class="label-right" id="label-right"></span>
+        </div>
+        <div class="slider-wrapper">
+          <input type="range" min="0" max="10" value="5" id="main-slider" class="main-slider">
+        </div>
+      </div>
+      <button id="btn-confirm" class="btn-primary">Conferma Risposta →</button>
+    </div>
+  </section>
+
+  <!-- PROCESSING -->
+  <section id="screen-processing" class="screen">
+    <div class="screen-content processing-content">
+      <div class="processing-header">Analisi in corso...</div>
+      <div class="processing-layout">
+        <div class="terminal-window">
+          <div class="terminal-title-bar">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">cappello_algorithm.exe</span>
+          </div>
+          <div class="terminal-lines" id="terminal-lines"></div>
+        </div>
+        <div class="scan-container">
+          <svg class="scan-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="85" class="scan-bg"/>
+            <circle cx="100" cy="100" r="85" class="scan-ring" id="scan-ring"/>
+            <text x="100" y="93" class="scan-text" text-anchor="middle">AI</text>
+            <text x="100" y="116" class="scan-text-small" text-anchor="middle">MATCHING</text>
+          </svg>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERDICT -->
+  <section id="screen-verdict" class="screen">
+    <div class="screen-content verdict-content">
+      <div class="verdict-eyebrow">Il tuo laboratorio è...</div>
+      <div class="verdict-lab-name" id="verdict-lab-name"></div>
+      <div class="verdict-details" id="verdict-details">
+        <div class="verdict-detail-item">
+          <span class="verdict-detail-label">Tutor</span>
+          <span class="verdict-detail-value" id="verdict-tutor"></span>
+        </div>
+        <div class="verdict-detail-item">
+          <span class="verdict-detail-label">Dove andare</span>
+          <span class="verdict-detail-value" id="verdict-room"></span>
+        </div>
+      </div>
+      <button id="btn-next" class="btn-secondary">Prossimo Ragazzo</button>
+    </div>
+  </section>
+
+  <!-- CHIAMATA ALLE ARMI -->
+  <section id="screen-chiamata" class="screen">
+    <div class="screen-content chiamata-content">
+      <div class="chiamata-icon">⚡</div>
+      <h2 class="chiamata-title">Chiamata alle Armi Speciale!</h2>
+      <p class="chiamata-desc">
+        Un solo laboratorio ha ancora bisogno di rinforzi immediati.<br>
+        Sei la persona giusta per completare il team!
+      </p>
+      <div class="chiamata-lab-name" id="chiamata-lab-name"></div>
+      <div class="verdict-details" style="opacity:1">
+        <div class="verdict-detail-item">
+          <span class="verdict-detail-label">Tutor</span>
+          <span class="verdict-detail-value" id="chiamata-tutor"></span>
+        </div>
+        <div class="verdict-detail-item">
+          <span class="verdict-detail-label">Dove andare</span>
+          <span class="verdict-detail-value" id="chiamata-room"></span>
+        </div>
+      </div>
+      <button id="btn-chiamata-next" class="btn-secondary">Prossimo Ragazzo</button>
+    </div>
+  </section>
+
+  <!-- DONE -->
+  <section id="screen-done" class="screen">
+    <div class="screen-content done-content">
+      <div class="done-icon">✅</div>
+      <h2 class="done-title">Smistamento Completato!</h2>
+      <p class="done-desc">
+        Tutti i laboratori hanno raggiunto la capienza massima.<br>
+        Il Talent Garden è pronto per iniziare!
+      </p>
+    </div>
+  </section>
+
+  <!-- ADMIN OVERLAY -->
+  <div id="admin-overlay" class="admin-overlay hidden">
+    <div class="admin-panel">
+      <div class="admin-header">
+        <h3>Pannello Amministratore</h3>
+        <button id="btn-admin-close" class="btn-close">×</button>
+      </div>
+      <div id="admin-labs-list" class="admin-labs-list"></div>
+      <div class="admin-footer">
+        <button id="btn-export" class="btn-outline">Esporta JSON</button>
+        <button id="btn-reset-all" class="btn-danger">⚠ Reset Tutti</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/algorithm.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
