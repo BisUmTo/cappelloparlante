@@ -1,10 +1,10 @@
 const LABS_CONFIG = [
-  { id: 'LAB_LUCI',   name: 'Luci + Proiezione',       capacity: 4, tutor: 'Zeno',                 room: 'Regia' },
+  { id: 'LAB_LUCI',   name: 'Luci + Proiezione',       capacity: 4, tutor: 'Zeno + Alessandro',                 room: 'Regia' },
   { id: 'LAB_VIDEO',  name: 'Video',                   capacity: 4, tutor: 'Lorenzo',               room: 'Sala Traduzione' },
-  { id: 'LAB_AUDIO',  name: 'Audio',                   capacity: 5, tutor: 'Kevin + Zucchiatti',    room: 'Fondo platea' },
+  { id: 'LAB_AUDIO',  name: 'Audio',                   capacity: 5, tutor: 'Kevin + Sebastiano',    room: 'Fondo platea' },
   { id: 'LAB_DRONI',  name: 'Coreografia con i Droni', capacity: 8, tutor: 'Fabio + Andreas',       room: 'Sala Don Bosco' },
   { id: 'LAB_PRES',   name: 'Presentatori',            capacity: 2, tutor: 'Don Daniele',           room: 'Ufficio Presidente' },
-  { id: 'LAB_NAO',    name: 'Balletto con NAO',         capacity: 3, tutor: 'Luca Zani + Maya',     room: 'Primo piano Juvenes' },
+  { id: 'LAB_NAO',    name: 'Balletto con NAO',         capacity: 3, tutor: 'Luca + Maya',     room: 'Primo piano Juvenes' },
   { id: 'LAB_COMEDY', name: 'Sketch Comico',           capacity: 5, tutor: 'Fabrizio + Frederiko',  room: 'Sala Giochi' },
 ];
 
