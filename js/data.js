@@ -8,8 +8,12 @@ const LABS_CONFIG = [
   { id: 'LAB_COMEDY', name: 'Sketch Comico',           capacity: 5, tutor: 'Fabrizio + Frederiko',  room: 'Sala Giochi' },
 ];
 
-// impatto: slider value (0-10) × impatto[labId] = score contribution
-// High positive = lab fits well when slider is right; negative = fits when slider is left
+// SCORING BIPOLARE: il punteggio è (sliderValue - 5) × impatto, dove sliderValue ∈ [0,10].
+//   - slider tutto a destra (10) → factor +5  → premia i lab con impatto POSITIVO
+//   - slider tutto a sinistra (0) → factor -5 → premia i lab con impatto NEGATIVO
+//   - slider al centro (5)        → factor  0 → nessun effetto (nessuna preferenza)
+// REGOLA SEGNI: i lab affini all'opzione DESTRA (labelRight) = impatto POSITIVO;
+//               i lab affini all'opzione SINISTRA (labelLeft) = impatto NEGATIVO.
 const QUESTIONS = [
   {
     id: 'Q01',
@@ -37,7 +41,7 @@ const QUESTIONS = [
     testo: 'Nello strutturare una performance sul palco, cosa preferiresti fare?',
     labelLeft: 'Far ridere di gusto',
     labelRight: 'Coordinare e presentare',
-    impatto: { LAB_COMEDY: 5, LAB_PRES: -5 },
+    impatto: { LAB_COMEDY: -5, LAB_PRES: 5 },
   },
   {
     id: 'Q05',
@@ -135,7 +139,7 @@ const QUESTIONS = [
     testo: 'Se senti una canzone, ti concentri di più sul ritmo e sul suono o su come ballarla?',
     labelLeft: 'Sul suono e sul ritmo',
     labelRight: 'Su come ballarla',
-    impatto: { LAB_AUDIO: 4, LAB_NAO: 4, LAB_DRONI: 1, LAB_PRES: -1 },
+    impatto: { LAB_AUDIO: -4, LAB_NAO: 4, LAB_DRONI: 1 },
   },
   {
     id: 'Q19',
@@ -149,7 +153,7 @@ const QUESTIONS = [
     testo: 'Preferisci risolvere un problema tecnico complicato o intrattenere un gruppo di amici?',
     labelLeft: 'Risolvere il problema tecnico',
     labelRight: 'Intrattenere gli amici',
-    impatto: { LAB_DRONI: 4, LAB_NAO: 3, LAB_LUCI: 2, LAB_COMEDY: -4, LAB_PRES: -3 },
+    impatto: { LAB_DRONI: -4, LAB_NAO: -3, LAB_LUCI: -2, LAB_COMEDY: 4, LAB_PRES: 3 },
   },
   {
     id: 'Q21',
@@ -163,14 +167,14 @@ const QUESTIONS = [
     testo: 'Quando guardi uno spettacolo, noti di più la musica o la scenografia luminosa?',
     labelLeft: 'La musica e i suoni',
     labelRight: 'Le luci e la scenografia',
-    impatto: { LAB_AUDIO: 4, LAB_LUCI: 4, LAB_VIDEO: 1 },
+    impatto: { LAB_AUDIO: -4, LAB_LUCI: 4, LAB_VIDEO: 1 },
   },
   {
     id: 'Q23',
     testo: 'Ti diverte di più fare battute spiritose o ballare a tempo di musica?',
     labelLeft: 'Fare battute spiritose',
     labelRight: 'Ballare a tempo',
-    impatto: { LAB_COMEDY: 5, LAB_NAO: 5, LAB_PRES: 1 },
+    impatto: { LAB_COMEDY: -5, LAB_NAO: 5, LAB_PRES: -1 },
   },
   {
     id: 'Q24',
@@ -202,14 +206,14 @@ const QUESTIONS = [
   },
   {
     id: 'Q28',
-    testo: 'Ti piacerebbe di più dare voce a un personaggio o gestire l\'audio di tutto lo show?',
+    testo: 'Ti piacerebbe di più gestire l\'audio di tutto lo show o dare voce a un personaggio?',
     labelLeft: 'Gestire l\'audio dello show',
     labelRight: 'Dare voce a un personaggio',
-    impatto: { LAB_AUDIO: 4, LAB_LUCI: 1, LAB_COMEDY: 4, LAB_PRES: 3, LAB_NAO: -1 },
+    impatto: { LAB_AUDIO: -4, LAB_LUCI: -1, LAB_COMEDY: 4, LAB_PRES: 3 },
   },
   {
     id: 'Q29',
-    testo: 'Quando lavori in gruppo, preferisci coordinare i movimenti o curare i dettagli tecnici?',
+    testo: 'Quando lavori in gruppo, preferisci curare i dettagli tecnici o coordinare i movimenti?',
     labelLeft: 'Curare i dettagli tecnici',
     labelRight: 'Coordinare i movimenti',
     impatto: { LAB_LUCI: -2, LAB_AUDIO: -2, LAB_DRONI: 3, LAB_NAO: 4, LAB_PRES: 2 },
@@ -237,7 +241,7 @@ const QUESTIONS = [
   },
   {
     id: 'Q33',
-    testo: 'Preferisci muoverti e usare il corpo o stare seduto a una console a controllare tutto?',
+    testo: 'Preferisci stare seduto a una console a controllare tutto o muoverti e usare il corpo?',
     labelLeft: 'A una console a controllare',
     labelRight: 'Muovermi e usare il corpo',
     impatto: { LAB_LUCI: -4, LAB_AUDIO: -4, LAB_NAO: 5, LAB_COMEDY: 3, LAB_DRONI: -1 },
@@ -268,14 +272,14 @@ const QUESTIONS = [
     testo: 'Preferisci creare l\'atmosfera giusta con le luci o catturare tutto con la telecamera?',
     labelLeft: 'Creare l\'atmosfera con le luci',
     labelRight: 'Catturare con la telecamera',
-    impatto: { LAB_LUCI: 4, LAB_VIDEO: 4, LAB_AUDIO: 1, LAB_NAO: -1 },
+    impatto: { LAB_LUCI: -4, LAB_VIDEO: 4, LAB_AUDIO: -1 },
   },
   {
     id: 'Q38',
     testo: 'Davanti a una platea, preferiresti presentare con serietà o strappare risate?',
     labelLeft: 'Presentare con serietà',
     labelRight: 'Strappare risate',
-    impatto: { LAB_PRES: 5, LAB_COMEDY: 5, LAB_LUCI: -2, LAB_AUDIO: -2 },
+    impatto: { LAB_PRES: -5, LAB_COMEDY: 5, LAB_LUCI: -2, LAB_AUDIO: -2 },
   },
   {
     id: 'Q39',
@@ -303,7 +307,7 @@ const QUESTIONS = [
     testo: 'Quando immagini di esibirti, ti vedi più mentre balli o mentre parli al pubblico?',
     labelLeft: 'Mentre ballo',
     labelRight: 'Mentre parlo al pubblico',
-    impatto: { LAB_NAO: 5, LAB_DRONI: 1, LAB_PRES: 4, LAB_COMEDY: 2 },
+    impatto: { LAB_NAO: -5, LAB_DRONI: -1, LAB_PRES: 4, LAB_COMEDY: 2 },
   },
   {
     id: 'Q43',
@@ -331,7 +335,7 @@ const QUESTIONS = [
     testo: 'Ti piacerebbe di più dirigere i movimenti di un robot o quelli del tuo corpo nella danza?',
     labelLeft: 'Dirigere i movimenti di un robot',
     labelRight: 'I movimenti del mio corpo',
-    impatto: { LAB_DRONI: 4, LAB_NAO: -1, LAB_COMEDY: 2, LAB_PRES: 1 },
+    impatto: { LAB_DRONI: -4, LAB_NAO: 4, LAB_COMEDY: 1, LAB_PRES: 1 },
   },
   {
     id: 'Q47',
@@ -359,7 +363,7 @@ const QUESTIONS = [
     testo: 'Ti vedi più a curare il suono perfetto o a far divertire la gente con la tua presenza?',
     labelLeft: 'Curare il suono perfetto',
     labelRight: 'Far divertire con la presenza',
-    impatto: { LAB_AUDIO: 5, LAB_LUCI: 2, LAB_COMEDY: 4, LAB_PRES: 3 },
+    impatto: { LAB_AUDIO: -5, LAB_LUCI: -2, LAB_COMEDY: 4, LAB_PRES: 3 },
   },
   {
     id: 'Q51',
@@ -373,7 +377,7 @@ const QUESTIONS = [
     testo: 'Preferisci esibirti con un gruppo coordinato o brillare da solo davanti a tutti?',
     labelLeft: 'Con un gruppo coordinato',
     labelRight: 'Da solo davanti a tutti',
-    impatto: { LAB_NAO: 4, LAB_DRONI: 2, LAB_PRES: 4, LAB_COMEDY: 2, LAB_AUDIO: -2 },
+    impatto: { LAB_NAO: -4, LAB_DRONI: -2, LAB_PRES: 4, LAB_COMEDY: 2, LAB_AUDIO: -1 },
   },
   {
     id: 'Q53',
@@ -394,6 +398,6 @@ const QUESTIONS = [
     testo: 'Quando pensi a tecnologia e spettacolo insieme, ti vedi più con droni in volo o con robot che danzano?',
     labelLeft: 'Con i droni in volo',
     labelRight: 'Con i robot che danzano',
-    impatto: { LAB_DRONI: 4, LAB_NAO: 4, LAB_LUCI: 1 },
+    impatto: { LAB_DRONI: -4, LAB_NAO: 4 },
   },
 ];
